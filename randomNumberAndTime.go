@@ -14,6 +14,6 @@ func main() {
 	fmt.Println("The time is", time.Now())
 
 	rand.Seed(int64(time.Now().UTC().Nanosecond()))
-	fmt.Println("a random generated number=", rand.Intn(100), rand.Intn(100))
+	fmt.Println("a random generated number=", rand.Intn(100))
 
 }
