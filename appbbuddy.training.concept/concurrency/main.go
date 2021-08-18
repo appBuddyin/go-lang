@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"appbbuddy.training.concept/concurrency/helpers"
+	"github.com/appBuddyin/go-lang/appbbuddy.training.concept/concurrency/helpers"
 )
 
 const numPool = 1000
