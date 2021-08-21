@@ -1,0 +1,19 @@
+// Stacking defers
+// Deferred function calls are pushed onto a stack.
+// When a function returns, its deferred calls are
+// executed in last-in-first-out order.
+
+package flow
+
+
+import "fmt"
+
+func stacking() {
+	fmt.Println("counting")
+
+	for i := 0; i < 10; i++ {
+		defer fmt.Println(i)
+	}
+
+	fmt.Println("done")
+}
