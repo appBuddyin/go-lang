@@ -7,6 +7,8 @@ import (
 	"net/http"
 )
 
+const portNumber = ":8080"
+
 //Home is the home page handeler
 func Home(w http.ResponseWriter, r *http.Request) {
 	n, err := fmt.Fprintf(w, "this is home page")
@@ -49,6 +51,7 @@ func MultipleRoute() {
 	http.HandleFunc("/about", About)
 
 	// start listening at http://localhost:8080 and give the result second arg nill as already defind handeler
-	_ = http.ListenAndServe(":8080", nil)
+	log.Println("starting application on portNumber - ", portNumber)
+	_ = http.ListenAndServe(portNumber, nil)
 
 }
