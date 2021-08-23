@@ -1,7 +1,6 @@
 package helloWebApp
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -25,25 +24,6 @@ func About(w http.ResponseWriter, r *http.Request) {
 		log.Println("error in About page handeler -", err) // using log good for debuging
 	}
 	log.Println("number of bytes written through about page is -", n)
-}
-
-func AddValues(x, y int) (int, error) {
-	return int(x + y), nil
-}
-
-func SubtractValues(x, y int) (int, error) {
-	return int(x - y), nil
-}
-
-func DevideValues(x, y int) (int, error) {
-	if y == 0 {
-		return 0, errors.New("error cant devide by zero")
-	}
-	return int(x / y), nil
-}
-
-func MultiplyValues(x, y int) (int, error) {
-	return int(x * y), nil
 }
 
 func MultipleRoute() {
