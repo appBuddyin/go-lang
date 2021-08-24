@@ -13,5 +13,6 @@ func main() {
 	// helloWebApp.MultipleRoute()
 	// helloWebApp.UsingJason()
 	// helloWebApp.SimpleApi()
-	calculator.CalculateApi()
+	// calculator.CalculateApi()
+	calculator.Cal()
 }
