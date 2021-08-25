@@ -1,9 +1,9 @@
-package add
+package calculator
 
 import "testing"
 
 // table test
-var tests = []struct {
+var testsForAdd = []struct {
 	name     string
 	number1 float32
 	number2  float32
@@ -18,8 +18,11 @@ var tests = []struct {
 }
 
 func TestAdd(t *testing.T) {
-	for _, tt := range tests {
-		got, err := AddValues(tt.number1, tt.number2)
+	for _, tt := range testsForAdd {
+		var u UserInput
+		u.FirstNumber=tt.number1
+		u.SecondNumber=tt.number2
+		got, err := u.AddValues()
 		if tt.isErr {
 			if err == nil {
 				t.Error("Expected an error but did not get one")

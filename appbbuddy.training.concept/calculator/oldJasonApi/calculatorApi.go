@@ -9,10 +9,6 @@ import (
 
 const runAtAddress = "localhost:8080"
 
-type Operation interface {
-	Says() string
-	NumberOfLegs() int
-}
 type QueryOptions struct {
 	FirstNumber  int    `json:"firstNumber"`
 	SecondNumber int    `json:"secondNumber"`

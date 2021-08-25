@@ -1,9 +1,9 @@
-package subtract
+package calculator
 
 import "testing"
 
 // table test
-var tests = []struct {
+var testsForSubstring = []struct {
 	name     string
 	number1 float32
 	number2  float32
@@ -17,9 +17,12 @@ var tests = []struct {
 	{"valid-data", 80.0, 10.0, 70.0, false},
 }
 
-func TestAdd(t *testing.T) {
-	for _, tt := range tests {
-		got, err := SubtractValues(tt.number1, tt.number2)
+func TestSubstraction(t *testing.T) {
+	for _, tt := range testsForSubstring {
+		var u UserInput
+		u.FirstNumber=tt.number1
+		u.SecondNumber=tt.number2
+		got, err := u.SubtractValues()
 		if tt.isErr {
 			if err == nil {
 				t.Error("Expected an error but did not get one")

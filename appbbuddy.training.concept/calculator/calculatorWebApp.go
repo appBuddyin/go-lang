@@ -10,12 +10,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Cal() {
+type UserInput struct {
+	FirstNumber  float32
+	SecondNumber float32
+	Operator     string
+}
+
+func CalculatorWebApp() {
 	var num1 float32
 	var num2 float32
 	var operator string
 	var err error
 	var message string
+	var u1 UserInput
+
+
+
 	router := gin.Default()
 	router.GET("/*path", func(c *gin.Context) {
 		path := c.Param("path")
@@ -28,10 +38,18 @@ func Cal() {
 		log.Println("2 = ", parameter[2])
 		log.Println("3 = ", parameter[3])
 
-		num1, num2, operator, err = values(parameter)
+		num1, num2, operator, err = valuesFromString(parameter)
 		if err == nil {
-			message = fmt.Sprintf("%f %s %f=", num1, operator, num2)
-		} else {
+			u1.FirstNumber=num1
+			u1.SecondNumber=num2
+			u1.Operator=operator
+			answer,err:=calculate(u1)
+			if err == nil {
+				message = fmt.Sprintf("%f %s %f= %f", num1, operator, num2,answer)
+				}else{
+					message = fmt.Sprintf("an error occurred %e", err)
+				}
+			} else {
 			message = fmt.Sprint("an error occurred -", err)
 		}
 		c.String(http.StatusOK, message)
@@ -40,7 +58,11 @@ func Cal() {
 	router.Run(":8080")
 }
 
-func values(parameter []string) (num1, num2 float32, operator string, err error) {
+
+
+
+
+func valuesFromString(parameter []string) (num1, num2 float32, operator string, err error) {
 	switch {
 	case len(parameter) == 4:
 
@@ -65,6 +87,7 @@ func values(parameter []string) (num1, num2 float32, operator string, err error)
 		}
 
 		operator = parameter[2]
+		err=checkOperator(operator)
 		log.Println("operator:", operator)
 
 		return num1, num2, operator, err
@@ -91,8 +114,9 @@ func values(parameter []string) (num1, num2 float32, operator string, err error)
 		}
 
 		operator = "/"
-		log.Println("operator:", operator)
 
+		log.Println("operator:", operator)
+		err=checkOperator(operator)
 		return num1, num2, operator, err
 
 	default:
@@ -104,5 +128,26 @@ func values(parameter []string) (num1, num2 float32, operator string, err error)
 }
 
 func checkOperator(operator string)(err error){
-	if operator == "+" or
+	if operator=="+" || operator=="-" || operator=="/" || operator=="*"{
+		err=nil
+		return err
+	}else{
+		err=fmt.Errorf("the operator %s is not defined", operator)
+		return err
+	}
+}
+
+func calculate(u UserInput)(float32, error){
+	switch u.Operator{
+		case "+":
+		return u.AddValues()
+		case "-":
+		return u.SubtractValues()
+		case "/":
+		return u.DevideValues()
+		case "*":
+		return u.MultiplyValues()
+		default:
+			return 0,fmt.Errorf("the operator %s is not defined",u.Operator)
+	}
 }

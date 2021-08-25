@@ -1,9 +1,9 @@
-package devide
+package calculator
 
 import "testing"
 
 // table test
-var tests = []struct {
+var testsForDevide = []struct {
 	name     string
 	dividend float32
 	divisor  float32
@@ -17,8 +17,11 @@ var tests = []struct {
 }
 
 func TestDivision(t *testing.T) {
-	for _, tt := range tests {
-		got, err := DevideValues(tt.dividend, tt.divisor)
+	for _, tt := range testsForDevide {
+		var u UserInput
+		u.FirstNumber=tt.dividend
+		u.SecondNumber=tt.divisor
+		got, err := u.DevideValues()
 		if tt.isErr {
 			if err == nil {
 				t.Error("Expected an error but did not get one")
