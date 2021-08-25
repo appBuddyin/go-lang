@@ -24,8 +24,6 @@ func CalculatorWebApp() {
 	var message string
 	var u1 UserInput
 
-
-
 	router := gin.Default()
 	router.GET("/*path", func(c *gin.Context) {
 		path := c.Param("path")
@@ -33,23 +31,20 @@ func CalculatorWebApp() {
 
 		log.Printf("parameter type = %T ", parameter)
 		log.Println("parameter length = ", len(parameter))
-		log.Println("0 = ", parameter[0])
-		log.Println("1 = ", parameter[1])
-		log.Println("2 = ", parameter[2])
-		log.Println("3 = ", parameter[3])
+		log.Println("parameter  = ", parameter[:])
 
 		num1, num2, operator, err = valuesFromString(parameter)
 		if err == nil {
-			u1.FirstNumber=num1
-			u1.SecondNumber=num2
-			u1.Operator=operator
-			answer,err:=calculate(u1)
+			u1.FirstNumber = num1
+			u1.SecondNumber = num2
+			u1.Operator = operator
+			answer, err := calculate(u1)
 			if err == nil {
-				message = fmt.Sprintf("%f %s %f= %f", num1, operator, num2,answer)
-				}else{
-					message = fmt.Sprintf("an error occurred %e", err)
-				}
+				message = fmt.Sprintf("%f %s %f= %f", num1, operator, num2, answer)
 			} else {
+				message = fmt.Sprintf("an error occurred %e", err)
+			}
+		} else {
 			message = fmt.Sprint("an error occurred -", err)
 		}
 		c.String(http.StatusOK, message)
@@ -57,10 +52,6 @@ func CalculatorWebApp() {
 
 	router.Run(":8080")
 }
-
-
-
-
 
 func valuesFromString(parameter []string) (num1, num2 float32, operator string, err error) {
 	switch {
@@ -87,7 +78,7 @@ func valuesFromString(parameter []string) (num1, num2 float32, operator string, 
 		}
 
 		operator = parameter[2]
-		err=checkOperator(operator)
+		err = checkOperator(operator)
 		log.Println("operator:", operator)
 
 		return num1, num2, operator, err
@@ -116,7 +107,7 @@ func valuesFromString(parameter []string) (num1, num2 float32, operator string, 
 		operator = "/"
 
 		log.Println("operator:", operator)
-		err=checkOperator(operator)
+		err = checkOperator(operator)
 		return num1, num2, operator, err
 
 	default:
@@ -127,27 +118,27 @@ func valuesFromString(parameter []string) (num1, num2 float32, operator string, 
 
 }
 
-func checkOperator(operator string)(err error){
-	if operator=="+" || operator=="-" || operator=="/" || operator=="*"{
-		err=nil
+func checkOperator(operator string) (err error) {
+	if operator == "+" || operator == "-" || operator == "/" || operator == "*" {
+		err = nil
 		return err
-	}else{
-		err=fmt.Errorf("the operator %s is not defined", operator)
+	} else {
+		err = fmt.Errorf("the operator %s is not defined", operator)
 		return err
 	}
 }
 
-func calculate(u UserInput)(float32, error){
-	switch u.Operator{
-		case "+":
+func calculate(u UserInput) (float32, error) {
+	switch u.Operator {
+	case "+":
 		return u.AddValues()
-		case "-":
+	case "-":
 		return u.SubtractValues()
-		case "/":
+	case "/":
 		return u.DevideValues()
-		case "*":
+	case "*":
 		return u.MultiplyValues()
-		default:
-			return 0,fmt.Errorf("the operator %s is not defined",u.Operator)
+	default:
+		return 0, fmt.Errorf("the operator %s is not defined", u.Operator)
 	}
 }
