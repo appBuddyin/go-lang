@@ -2,25 +2,11 @@ package calculator
 
 import "testing"
 
-// table test
-var testsForDevide = []struct {
-	name     string
-	dividend float32
-	divisor  float32
-	expected float32
-	isErr    bool
-}{
-	{"valid-data", 100.0, 10.0, 10.0, false},
-	{"invalid-data", 100.0, 0.0, 0.0, true},
-	{"expect-5", 50.0, 10.0, 5.0, false},
-	{"expect-fraction", -1.0, -777.0, 0.0012870013, false},
-}
-
 func TestDivision(t *testing.T) {
 	for _, tt := range testsForDevide {
 		var u UserInput
-		u.FirstNumber=tt.dividend
-		u.SecondNumber=tt.divisor
+		u.FirstNumber = tt.dividend
+		u.SecondNumber = tt.divisor
 		got, err := u.DevideValues()
 		if tt.isErr {
 			if err == nil {
@@ -33,7 +19,7 @@ func TestDivision(t *testing.T) {
 		}
 
 		if got != tt.expected {
-			t.Errorf("Expected %f but got %f", tt.expected, got)
-		}
+			t.Errorf("Expected %f %T but got %f %T", tt.expected, tt.expected, got, got)
+		} 
 	}
 }

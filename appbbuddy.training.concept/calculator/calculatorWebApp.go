@@ -10,12 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserInput struct {
-	FirstNumber  float32
-	SecondNumber float32
-	Operator     string
-}
-
 func CalculatorWebApp() {
 	var num1 float32
 	var num2 float32
@@ -23,6 +17,8 @@ func CalculatorWebApp() {
 	var err error
 	var message string
 	var u1 UserInput
+	//Verify that *UserInput implement operation
+	var _ operations = UserInput{}
 
 	router := gin.Default()
 	router.GET("/*path", func(c *gin.Context) {
